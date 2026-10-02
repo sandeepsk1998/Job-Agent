@@ -9,7 +9,7 @@ Sends a digest by email (optional) and always writes digest.md.
 
 Run:  python job_agent.py
 """
-import os, re, json, html, smtplib, sys
+import os, re, json, csv, html, smtplib, sys
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 import requests
@@ -149,6 +149,18 @@ def build_digest(jobs):
                      f"{d} | exp: {j['exp']} | {j['source']}\n{j['url']}\n")
     return "\n".join(lines)
 
+def save_csv(jobs):
+    """Append every new job to jobs.csv (cumulative list of all jobs found)."""
+    path = os.path.join(BASE, "jobs.csv")
+    exists = os.path.exists(path)
+    with open(path, "a", newline="", encoding="utf-8-sig") as f:
+        w = csv.writer(f)
+        if not exists:
+            w.writerow(["Found on", "Posted", "Title", "Company", "Location", "Experience", "Source", "Link"])
+        for j in jobs:
+            w.writerow([NOW.strftime("%Y-%m-%d"), j["posted"].strftime("%Y-%m-%d") if j["posted"] else "",
+                        j["title"], j["company"], j["location"], j["exp"], j["source"], j["url"]])
+
 def send_email(body):
     user, pw, to = os.getenv("EMAIL_USER"), os.getenv("EMAIL_APP_PASSWORD"), os.getenv("EMAIL_TO")
     if not (user and pw and to):
@@ -182,6 +194,7 @@ def main():
     digest = build_digest(new)
     open(os.path.join(BASE, "digest.md"), "w", encoding="utf-8").write(digest)
     print(digest)
+    save_csv(new)
     send_email(digest)
     json.dump(sorted(seen | {j["url"] for j in new}), open(SEEN_FILE, "w"))
 
