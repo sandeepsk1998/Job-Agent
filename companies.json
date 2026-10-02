@@ -1,0 +1,5 @@
+{
+  "_help": "Add company slugs. Greenhouse: URL looks like boards.greenhouse.io/<slug>. Lever: jobs.lever.co/<slug>. Wrong slugs are just skipped.",
+  "greenhouse": [],
+  "lever": []
+}

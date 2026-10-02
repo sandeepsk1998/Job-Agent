@@ -1,0 +1,12 @@
+{
+  "days": 3,
+  "min_years": 2,
+  "max_years": 5,
+  "must_have_any": ["servicenow", "service now"],
+  "module_keywords": ["itsm", "itom", "cmdb", "discovery", "event management", "incident management", "change management", "problem management", "service catalog", "itil"],
+  "exclude_title_words": ["director", "head of", "vice president", "intern"],
+  "location_contains": [],
+  "adzuna_country": "in",
+  "adzuna_queries": ["servicenow developer", "servicenow itsm", "servicenow itom", "servicenow administrator"],
+  "location": ""
+}
