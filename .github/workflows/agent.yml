@@ -2,7 +2,7 @@ name: ServiceNow Job Agent
 
 on:
   schedule:
-    - cron: "30 3 * * *"   # 09:00 IST every day (GitHub uses UTC)
+    - cron: "*/2 * * * *"   # 09:00 IST every day (GitHub uses UTC)
   workflow_dispatch:        # lets you run it manually from the Actions tab
 
 permissions:
@@ -34,5 +34,5 @@ jobs:
         run: |
           git config user.name "job-agent-bot"
           git config user.email "job-agent-bot@users.noreply.github.com"
-          git add seen.json || true
+          git add seen.json jobs.csv digest.md || true
           git diff --cached --quiet || (git commit -m "Update seen jobs" && git push)
