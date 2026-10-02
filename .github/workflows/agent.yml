@@ -2,7 +2,7 @@ name: ServiceNow Job Agent
 
 on:
   schedule:
-    - cron: "*/2 * * * *"   # 09:00 IST every day (GitHub uses UTC)
+    - cron: "*/5 * * * *"   # 09:00 IST every day (GitHub uses UTC)
   workflow_dispatch:        # lets you run it manually from the Actions tab
 
 permissions:
